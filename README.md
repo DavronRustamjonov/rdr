@@ -23,3 +23,10 @@ The RDR system monitors the driver’s face, eyes, and blinking patterns to dete
 
 ## 📱 System Architecture
 Camera → AI Model → Drowsiness Detection → Alert System → Mobile App
+
+## 📱 Screenshots
+
+![Screenshot 1](https://github.com/DavronRustamjonov/rdr/blob/rizq/photo_1.jpg?raw=true)
+![Screenshot 2](https://github.com/DavronRustamjonov/rdr/blob/rizq/photo_2.jpg?raw=true)
+![Screenshot 3](https://github.com/DavronRustamjonov/rdr/blob/rizq/photo_3.jpg?raw=true)
+![Screenshot 4](https://github.com/DavronRustamjonov/rdr/blob/rizq/photo_4.jpg?raw=true)
