@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../common/widgets/ear_bar.dart';
 import '../../../../common/widgets/eye_ring.dart';
-import '../../../../config/l10n/app_strings.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/enums/monitoring_status.dart';
+import '../../../../core/extensions/l10n_extension.dart';
 import '../../../settings/presentation/cubit/settings_cubit.dart';
 import '../../../settings/presentation/cubit/settings_state.dart';
 import '../cubit/monitoring_cubit.dart';
@@ -18,9 +18,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, settingsState) {
-        final lang = settingsState.language;
-        String t(String key) => AppStrings.t(key, lang);
-
         return BlocBuilder<MonitoringCubit, MonitoringState>(
           builder: (context, monitoringState) {
             final active = monitoringState is MonitoringActive ? monitoringState : null;
@@ -37,9 +34,9 @@ class HomePage extends StatelessWidget {
 
             final statusLabel = isActive
                 ? switch (status) {
-                    MonitoringStatus.sleeping => t('asleep'),
-                    MonitoringStatus.warning => t('drowsy'),
-                    _ => t('awake'),
+                    MonitoringStatus.sleeping => context.l10n.asleep,
+                    MonitoringStatus.warning => context.l10n.drowsy,
+                    _ => context.l10n.awake,
                   }
                 : '—';
 
@@ -48,10 +45,7 @@ class HomePage extends StatelessWidget {
               body: SafeArea(
                 child: Column(
                   children: [
-                    _Header(
-                      deviceConnected: settingsState.deviceConnected,
-                      t: t,
-                    ),
+                    _Header(deviceConnected: settingsState.deviceConnected),
                     Expanded(
                       child: SingleChildScrollView(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -65,20 +59,19 @@ class HomePage extends StatelessWidget {
                               color: statusColor,
                               status: status,
                               isActive: isActive,
-                              t: t,
                             ),
                             if (isActive) ...[
                               SizedBox(height: 20.h),
                               EarBar(
                                 value: ear,
                                 threshold: settingsState.earThreshold,
-                                label: t('earScore'),
+                                label: context.l10n.earScore,
                               ),
                             ],
                             SizedBox(height: 28.h),
-                            _MainButton(isActive: isActive, t: t),
+                            _MainButton(isActive: isActive),
                             SizedBox(height: 16.h),
-                            _MonitorPill(isActive: isActive, t: t),
+                            _MonitorPill(isActive: isActive),
                             SizedBox(height: 40.h),
                           ],
                         ),
@@ -97,9 +90,8 @@ class HomePage extends StatelessWidget {
 
 class _Header extends StatelessWidget {
   final bool deviceConnected;
-  final String Function(String) t;
 
-  const _Header({required this.deviceConnected, required this.t});
+  const _Header({required this.deviceConnected});
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +130,9 @@ class _Header extends StatelessWidget {
                 ),
                 SizedBox(width: 6.w),
                 Text(
-                  deviceConnected ? t('deviceConnected') : t('deviceDisconnected'),
+                  deviceConnected
+                      ? context.l10n.deviceConnected
+                      : context.l10n.deviceDisconnected,
                   style: TextStyle(
                     fontFamily: 'Rajdhani',
                     fontSize: 12.sp,
@@ -161,14 +155,12 @@ class _StatusBlock extends StatelessWidget {
   final Color color;
   final MonitoringStatus status;
   final bool isActive;
-  final String Function(String) t;
 
   const _StatusBlock({
     required this.label,
     required this.color,
     required this.status,
     required this.isActive,
-    required this.t,
   });
 
   @override
@@ -190,7 +182,7 @@ class _StatusBlock extends StatelessWidget {
           ),
           if (isActive && status == MonitoringStatus.sleeping)
             Text(
-              t('warning'),
+              context.l10n.warning,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -203,7 +195,7 @@ class _StatusBlock extends StatelessWidget {
             ),
           if (isActive && status == MonitoringStatus.warning)
             Text(
-              t('eyesClosed_warn'),
+              context.l10n.eyesClosedWarn,
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -224,9 +216,8 @@ class _StatusBlock extends StatelessWidget {
 
 class _MainButton extends StatelessWidget {
   final bool isActive;
-  final String Function(String) t;
 
-  const _MainButton({required this.isActive, required this.t});
+  const _MainButton({required this.isActive});
 
   @override
   Widget build(BuildContext context) {
@@ -261,7 +252,10 @@ class _MainButton extends StatelessWidget {
             ),
             SizedBox(width: 10.w),
             Text(
-              (isActive ? t('stopMonitoring') : t('startMonitoring')).toUpperCase(),
+              (isActive
+                      ? context.l10n.stopMonitoring
+                      : context.l10n.startMonitoring)
+                  .toUpperCase(),
               style: TextStyle(
                 fontFamily: 'Rajdhani',
                 fontSize: 17.sp,
@@ -279,9 +273,8 @@ class _MainButton extends StatelessWidget {
 
 class _MonitorPill extends StatelessWidget {
   final bool isActive;
-  final String Function(String) t;
 
-  const _MonitorPill({required this.isActive, required this.t});
+  const _MonitorPill({required this.isActive});
 
   @override
   Widget build(BuildContext context) {
@@ -304,7 +297,7 @@ class _MonitorPill extends StatelessWidget {
           ),
           SizedBox(width: 8.w),
           Text(
-            isActive ? t('monitoringActive') : t('monitoringIdle'),
+            isActive ? context.l10n.monitoringActive : context.l10n.monitoringIdle,
             style: TextStyle(
               fontFamily: 'Rajdhani',
               fontSize: 13.sp,

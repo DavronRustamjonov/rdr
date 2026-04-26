@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../config/l10n/app_strings.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/enums/alert_mode.dart';
+import '../../../../core/extensions/l10n_extension.dart';
 import '../../../settings/presentation/cubit/settings_cubit.dart';
 import '../../domain/entities/alarm_config.dart';
 import '../cubit/alarm_cubit.dart';
@@ -15,9 +15,6 @@ class AlarmPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lang = context.select((SettingsCubit c) => c.state.language);
-    String t(String key) => AppStrings.t(key, lang);
-
     return BlocBuilder<AlarmCubit, AlarmState>(
       builder: (context, state) {
         final isFired = state is AlarmFired;
@@ -38,7 +35,7 @@ class AlarmPage extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 40.h),
               children: [
                 Text(
-                  t('alarm').toUpperCase(),
+                  context.l10n.alarm.toUpperCase(),
                   style: TextStyle(
                     fontFamily: 'Rajdhani',
                     fontSize: 28.sp,
@@ -48,12 +45,12 @@ class AlarmPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16.h),
-                if (isFired) _AlarmFiredBanner(t: t),
+                if (isFired) const _AlarmFiredBanner(),
                 _buildCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _cardHeader(Icons.access_time, t('alarmTime')),
+                      _cardHeader(Icons.access_time, context.l10n.alarmTime),
                       SizedBox(height: 16.h),
                       GestureDetector(
                         onTap: () => _pickTime(context),
@@ -90,15 +87,15 @@ class AlarmPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _cardHeader(Icons.vibration, t('alertMode')),
+                      _cardHeader(Icons.vibration, context.l10n.alertMode),
                       SizedBox(height: 14.h),
                       Row(
                         children: [
-                          _ModeChip(mode: AlertMode.vibration, icon: Icons.phone_android, label: t('vibration'), current: alertMode),
+                          _ModeChip(mode: AlertMode.vibration, icon: Icons.phone_android, label: context.l10n.vibration, current: alertMode),
                           SizedBox(width: 8.w),
-                          _ModeChip(mode: AlertMode.audio, icon: Icons.volume_up, label: t('audio'), current: alertMode),
+                          _ModeChip(mode: AlertMode.audio, icon: Icons.volume_up, label: context.l10n.audio, current: alertMode),
                           SizedBox(width: 8.w),
-                          _ModeChip(mode: AlertMode.electric, icon: Icons.bolt, label: t('electric'), current: alertMode),
+                          _ModeChip(mode: AlertMode.electric, icon: Icons.bolt, label: context.l10n.electric, current: alertMode),
                         ],
                       ),
                     ],
@@ -111,7 +108,7 @@ class AlarmPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          _cardHeader(Icons.flash_on, t('pulseIntensity')),
+                          _cardHeader(Icons.flash_on, context.l10n.pulseIntensity),
                           const Spacer(),
                           Text(
                             '$intensity',
@@ -153,7 +150,7 @@ class AlarmPage extends StatelessWidget {
                           Icon(Icons.check_circle_outline, color: AppColors.accent, size: 22.r),
                           SizedBox(width: 10.w),
                           Text(
-                            t('save').toUpperCase(),
+                            context.l10n.save.toUpperCase(),
                             style: TextStyle(
                               fontFamily: 'Rajdhani',
                               fontSize: 18.sp,
@@ -182,7 +179,7 @@ class AlarmPage extends StatelessWidget {
                       ),
                       SizedBox(width: 8.w),
                       Text(
-                        '${t('alarmActive')} — ${_fmt(config.hour!, config.minute!)}',
+                        '${context.l10n.alarmActive} — ${_fmt(config.hour!, config.minute!)}',
                         style: TextStyle(
                           fontFamily: 'Rajdhani',
                           fontSize: 14.sp,
@@ -264,8 +261,7 @@ class AlarmPage extends StatelessWidget {
 }
 
 class _AlarmFiredBanner extends StatefulWidget {
-  final String Function(String) t;
-  const _AlarmFiredBanner({required this.t});
+  const _AlarmFiredBanner();
 
   @override
   State<_AlarmFiredBanner> createState() => _AlarmFiredBannerState();
@@ -290,7 +286,6 @@ class _AlarmFiredBannerState extends State<_AlarmFiredBanner>
 
   @override
   Widget build(BuildContext context) {
-    final t = widget.t;
     return Container(
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.all(20.r),
@@ -310,7 +305,7 @@ class _AlarmFiredBannerState extends State<_AlarmFiredBanner>
           ),
           SizedBox(height: 12.h),
           Text(
-            t('alarmActive').toUpperCase(),
+            context.l10n.alarmActive.toUpperCase(),
             style: TextStyle(
               fontFamily: 'Rajdhani',
               fontSize: 22.sp,
@@ -335,7 +330,7 @@ class _AlarmFiredBannerState extends State<_AlarmFiredBanner>
                   Icon(Icons.stop_circle, color: AppColors.danger, size: 20.r),
                   SizedBox(width: 8.w),
                   Text(
-                    t('stop').toUpperCase(),
+                    context.l10n.stop.toUpperCase(),
                     style: TextStyle(
                       fontFamily: 'Rajdhani',
                       fontSize: 16.sp,

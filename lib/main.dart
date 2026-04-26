@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'config/routes/app_router.dart';
 import 'core/di/injection_container.dart';
+import 'core/gen/l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
 import 'features/settings/presentation/cubit/settings_cubit.dart';
 import 'features/settings/presentation/cubit/settings_state.dart';
@@ -42,6 +43,7 @@ class RDRApp extends StatelessWidget {
               theme: AppTheme.dark,
               locale: Locale(settingsState.language),
               localizationsDelegates: const [
+                AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../config/l10n/app_strings.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../settings/presentation/cubit/settings_cubit.dart';
+import '../../../../core/extensions/l10n_extension.dart';
 
 class AppShellPage extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -12,9 +10,6 @@ class AppShellPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lang = context.select((SettingsCubit c) => c.state.language);
-    String t(String key) => AppStrings.t(key, lang);
-
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: Container(
@@ -31,22 +26,22 @@ class AppShellPage extends StatelessWidget {
             BottomNavigationBarItem(
               icon: const Icon(Icons.visibility_outlined),
               activeIcon: const Icon(Icons.visibility),
-              label: t('monitoring'),
+              label: context.l10n.monitoring,
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.tune_outlined),
               activeIcon: const Icon(Icons.tune),
-              label: t('calibration'),
+              label: context.l10n.calibration,
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.alarm_outlined),
               activeIcon: const Icon(Icons.alarm),
-              label: t('alarm'),
+              label: context.l10n.alarm,
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.settings_outlined),
               activeIcon: const Icon(Icons.settings),
-              label: t('settings'),
+              label: context.l10n.settings,
             ),
           ],
         ),

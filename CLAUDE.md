@@ -10,6 +10,7 @@ flutter analyze                         # lint (must return "No issues found!")
 flutter run                             # run on connected device
 flutter build apk --release             # release APK
 flutter pub run build_runner build      # regenerate lib/core/gen/ after adding assets/fonts
+flutter gen-l10n                        # regenerate lib/core/gen/l10n/ after editing ARB files
 flutter test                            # run all tests
 flutter test test/path/to_test.dart     # run single test
 ```
@@ -35,9 +36,9 @@ features/<name>/
 |------|---------|
 | `lib/core/di/injection_container.dart` | GetIt wiring — data sources → repos → use cases → cubits |
 | `lib/config/routes/app_router.dart` | GoRouter with `StatefulShellRoute` (4 tabs) |
-| `lib/config/l10n/app_strings.dart` | `AppStrings.t(key, lang)` — uz/en/ru inline |
 | `lib/core/constants/app_colors.dart` | All colors via `AppColors.*` |
 | `lib/core/theme/app_theme.dart` | `AppTheme.dark` — single dark theme |
+| `lib/core/extensions/l10n_extension.dart` | `context.l10n` — shorthand for `AppLocalizations.of(context)` |
 
 ### DI rules
 - Repos + data sources: `registerLazySingleton`
@@ -55,7 +56,14 @@ features/<name>/
 After adding any image, SVG, or font: run `flutter pub run build_runner build` → regenerates `lib/core/gen/assets.gen.dart` + `lib/core/gen/fonts.gen.dart`. Reference via `Assets.*` / `FontFamily.*`, never raw strings. Lists containing `AssetGenImage` must be `final`, not `const`.
 
 ### Localization
-No ARB files. Translations in `AppStrings._map` (`lib/config/l10n/app_strings.dart`). Pages declare `String t(String key) => AppStrings.t(key, lang);` as local function; `lang` from `SettingsCubit.state.language`.
+ARB-based, code-generated. Supported languages: **uz / en / ru**.
+
+- ARB files: `lib/l10n/app_en.arb` (template), `app_uz.arb`, `app_ru.arb`
+- Generated output: `lib/core/gen/l10n/app_localizations.dart` (do not edit manually)
+- Config: `l10n.yaml` at project root (`nullable-getter: false`)
+- In pages: `context.l10n.keyName` via extension in `lib/core/extensions/l10n_extension.dart`
+- To add a string: add key+value to all 3 ARB files, run `flutter gen-l10n`
+- Language switching: `SettingsCubit.setLanguage(lang)` updates `locale` in `MaterialApp.router`; Flutter selects the correct `AppLocalizations` delegate automatically
 
 ### Features
 - **monitoring** — ML Kit face detection → `Stream<MonitoringResult>` via `FaceDetectionDataSource`. `MonitoringCubit` subscribes on start, calls `DeviceRepository.sendAlert()` on `sleeping` status.

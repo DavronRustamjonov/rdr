@@ -1,0 +1,141 @@
+{
+  "@@locale": "en",
+
+  "monitoringActive": "Monitoring Active",
+  "@monitoringActive": {},
+
+  "monitoringIdle": "Monitoring Stopped",
+  "@monitoringIdle": {},
+
+  "eyesOpen": "Eyes Open",
+  "@eyesOpen": {},
+
+  "eyesClosed": "Eyes Closed",
+  "@eyesClosed": {},
+
+  "warning": "Warning! Wake up",
+  "@warning": {},
+
+  "setAlarm": "Set Alarm",
+  "@setAlarm": {},
+
+  "pulseIntensity": "Pulse Intensity",
+  "@pulseIntensity": {},
+
+  "calibration": "Calibration",
+  "@calibration": {},
+
+  "alarm": "Alarm",
+  "@alarm": {},
+
+  "settings": "Settings",
+  "@settings": {},
+
+  "monitoring": "Monitor",
+  "@monitoring": {},
+
+  "startMonitoring": "Start Monitoring",
+  "@startMonitoring": {},
+
+  "stopMonitoring": "Stop Monitoring",
+  "@stopMonitoring": {},
+
+  "deviceConnected": "Device Connected",
+  "@deviceConnected": {},
+
+  "deviceDisconnected": "Device Disconnected",
+  "@deviceDisconnected": {},
+
+  "language": "Language",
+  "@language": {},
+
+  "intensity": "Signal Intensity",
+  "@intensity": {},
+
+  "alertMode": "Alert Mode",
+  "@alertMode": {},
+
+  "vibration": "Vibration",
+  "@vibration": {},
+
+  "audio": "Audio",
+  "@audio": {},
+
+  "electric": "Electric Pulse",
+  "@electric": {},
+
+  "threshold": "EAR Threshold",
+  "@threshold": {},
+
+  "calibrateNow": "Calibrate Now",
+  "@calibrateNow": {},
+
+  "eyesClosedWarn": "Your eyes are closing!",
+  "@eyesClosedWarn": {},
+
+  "awake": "Awake",
+  "@awake": {},
+
+  "drowsy": "Drowsy",
+  "@drowsy": {},
+
+  "asleep": "Asleep",
+  "@asleep": {},
+
+  "alarmTime": "Alarm Time",
+  "@alarmTime": {},
+
+  "stop": "Stop",
+  "@stop": {},
+
+  "save": "Save",
+  "@save": {},
+
+  "earScore": "Eye Openness Score",
+  "@earScore": {},
+
+  "connecting": "Connecting...",
+  "@connecting": {},
+
+  "esp32Ip": "ESP32 IP Address",
+  "@esp32Ip": {},
+
+  "testSignal": "Test Signal",
+  "@testSignal": {},
+
+  "signalSent": "Signal Sent",
+  "@signalSent": {},
+
+  "signalFailed": "Device Unreachable",
+  "@signalFailed": {},
+
+  "alarmActive": "Alarm Active",
+  "@alarmActive": {},
+
+  "alarmStopped": "Alarm Stopped",
+  "@alarmStopped": {},
+
+  "cameraPermission": "Camera permission required",
+  "@cameraPermission": {},
+
+  "grantPermission": "Grant Permission",
+  "@grantPermission": {},
+
+  "keepEyesOpen": "Keep your eyes wide open...",
+  "@keepEyesOpen": {},
+
+  "calibrating": "Calibrating...",
+  "@calibrating": {},
+
+  "calibrationDone": "Calibration complete",
+  "@calibrationDone": {},
+
+  "esp32Address": "ESP32 Address",
+  "@esp32Address": {},
+
+  "pingDevice": "Ping Device",
+  "@pingDevice": {},
+
+  "calibrationInfo": "EAR (Eye Aspect Ratio) — values below 0.20 indicate closed eyes, above 0.30 is fully open. Keep your eyes wide open during calibration.",
+  "@calibrationInfo": { "description": "Info box text in calibration page" }
+}

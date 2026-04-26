@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../config/l10n/app_strings.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/extensions/l10n_extension.dart';
 import '../../../settings/presentation/cubit/settings_cubit.dart';
 import '../cubit/calibration_cubit.dart';
 import '../cubit/calibration_state.dart';
@@ -13,9 +13,6 @@ class CalibrationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lang = context.select((SettingsCubit c) => c.state.language);
-    String t(String key) => AppStrings.t(key, lang);
-
     return BlocBuilder<CalibrationCubit, CalibrationState>(
       builder: (context, state) {
         final isCalibrating = state is CalibrationInProgress;
@@ -33,7 +30,7 @@ class CalibrationPage extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 40.h),
               children: [
                 Text(
-                  t('calibration').toUpperCase(),
+                  context.l10n.calibration.toUpperCase(),
                   style: TextStyle(
                     fontFamily: 'Rajdhani',
                     fontSize: 28.sp,
@@ -47,12 +44,11 @@ class CalibrationPage extends StatelessWidget {
                   isCalibrating: isCalibrating,
                   isDone: isDone,
                   threshold: isDone ? threshold : null,
-                  t: t,
                 ),
                 SizedBox(height: 20.h),
-                _ThresholdSelector(currentThreshold: threshold, t: t),
+                _ThresholdSelector(currentThreshold: threshold),
                 SizedBox(height: 16.h),
-                _InfoBox(),
+                const _InfoBox(),
               ],
             ),
           ),
@@ -66,13 +62,11 @@ class _CalibrationCard extends StatefulWidget {
   final bool isCalibrating;
   final bool isDone;
   final double? threshold;
-  final String Function(String) t;
 
   const _CalibrationCard({
     required this.isCalibrating,
     required this.isDone,
     required this.threshold,
-    required this.t,
   });
 
   @override
@@ -115,7 +109,6 @@ class _CalibrationCardState extends State<_CalibrationCard>
 
   @override
   Widget build(BuildContext context) {
-    final t = widget.t;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
@@ -148,7 +141,7 @@ class _CalibrationCardState extends State<_CalibrationCard>
           if (widget.isCalibrating) ...[
             SizedBox(height: 14.h),
             Text(
-              t('keepEyesOpen'),
+              context.l10n.keepEyesOpen,
               style: TextStyle(
                 fontFamily: 'Rajdhani',
                 fontSize: 15.sp,
@@ -170,7 +163,7 @@ class _CalibrationCardState extends State<_CalibrationCard>
                 Icon(Icons.check_circle, color: AppColors.success, size: 20.r),
                 SizedBox(width: 8.w),
                 Text(
-                  '${t('threshold')}: ${widget.threshold!.toStringAsFixed(2)}',
+                  '${context.l10n.threshold}: ${widget.threshold!.toStringAsFixed(2)}',
                   style: TextStyle(
                     fontFamily: 'Rajdhani',
                     fontSize: 16.sp,
@@ -215,7 +208,7 @@ class _CalibrationCardState extends State<_CalibrationCard>
                     ),
                     SizedBox(width: 10.w),
                     Text(
-                      widget.isCalibrating ? '5s...' : t('calibrateNow').toUpperCase(),
+                      widget.isCalibrating ? '5s...' : context.l10n.calibrateNow.toUpperCase(),
                       style: TextStyle(
                         fontFamily: 'Rajdhani',
                         fontSize: 16.sp,
@@ -237,9 +230,8 @@ class _CalibrationCardState extends State<_CalibrationCard>
 
 class _ThresholdSelector extends StatelessWidget {
   final double currentThreshold;
-  final String Function(String) t;
 
-  const _ThresholdSelector({required this.currentThreshold, required this.t});
+  const _ThresholdSelector({required this.currentThreshold});
 
   static const _presets = [0.15, 0.18, 0.20, 0.22, 0.25, 0.28, 0.30, 0.32];
 
@@ -251,7 +243,7 @@ class _ThresholdSelector extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              t('threshold').toUpperCase(),
+              context.l10n.threshold.toUpperCase(),
               style: TextStyle(
                 fontFamily: 'Rajdhani',
                 fontSize: 13.sp,
@@ -319,6 +311,8 @@ class _ThresholdSelector extends StatelessWidget {
 }
 
 class _InfoBox extends StatelessWidget {
+  const _InfoBox();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -335,7 +329,7 @@ class _InfoBox extends StatelessWidget {
           SizedBox(width: 10.w),
           Expanded(
             child: Text(
-              "EAR (Eye Aspect Ratio) — 0.20 past, 0.30 yuqori chegaraviy qiymat. Kalibratsiya vaqtida ko'zingizni keng oching.",
+              context.l10n.calibrationInfo,
               style: TextStyle(
                 fontFamily: 'Rajdhani',
                 fontSize: 14.sp,

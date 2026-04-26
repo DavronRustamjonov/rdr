@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../config/l10n/app_strings.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/extensions/l10n_extension.dart';
 import '../cubit/settings_cubit.dart';
 import '../cubit/settings_state.dart';
 
@@ -35,8 +35,6 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        String t(String key) => AppStrings.t(key, state.language);
-
         return Scaffold(
           backgroundColor: AppColors.bg,
           body: SafeArea(
@@ -44,7 +42,7 @@ class _SettingsPageState extends State<SettingsPage> {
               padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 40.h),
               children: [
                 Text(
-                  t('settings').toUpperCase(),
+                  context.l10n.settings.toUpperCase(),
                   style: TextStyle(
                     fontFamily: 'Rajdhani',
                     fontSize: 28.sp,
@@ -58,7 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _cardTitle(t('language')),
+                      _cardTitle(context.l10n.language),
                       SizedBox(height: 14.h),
                       Row(
                         children: [
@@ -77,7 +75,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _cardTitle(t('esp32Ip')),
+                      _cardTitle(context.l10n.esp32Ip),
                       SizedBox(height: 14.h),
                       Row(
                         children: [
@@ -153,7 +151,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       if (state.pingStatus == 'ok') ...[
                         SizedBox(height: 8.h),
                         Text(
-                          t('deviceConnected'),
+                          context.l10n.deviceConnected,
                           style: TextStyle(
                             fontFamily: 'Rajdhani',
                             fontSize: 13.sp,
@@ -164,7 +162,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ] else if (state.pingStatus == 'fail') ...[
                         SizedBox(height: 8.h),
                         Text(
-                          t('deviceDisconnected'),
+                          context.l10n.deviceDisconnected,
                           style: TextStyle(
                             fontFamily: 'Rajdhani',
                             fontSize: 13.sp,
@@ -183,7 +181,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     children: [
                       Row(
                         children: [
-                          _cardTitle(t('intensity')),
+                          _cardTitle(context.l10n.intensity),
                           const Spacer(),
                           Text(
                             '${state.intensity}',
@@ -249,7 +247,6 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: Opacity(
                           opacity: state.testStatus == 'sending' ? 0.5 : 1.0,
                           child: Container(
-                            // height: 52.h,
                             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(14.r),
@@ -288,12 +285,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                 Flexible(
                                   child: Text(
                                     state.testStatus == 'ok'
-                                        ? t('signalSent')
+                                        ? context.l10n.signalSent
                                         : state.testStatus == 'fail'
-                                            ? t('signalFailed')
+                                            ? context.l10n.signalFailed
                                             : state.testStatus == 'sending'
-                                                ? t('connecting')
-                                                : t('testSignal').toUpperCase(),
+                                                ? context.l10n.connecting
+                                                : context.l10n.testSignal.toUpperCase(),
                                     style: TextStyle(
                                       fontFamily: 'Rajdhani',
                                       fontSize: 15.sp,
@@ -303,11 +300,11 @@ class _SettingsPageState extends State<SettingsPage> {
                                           : state.testStatus == 'fail'
                                               ? AppColors.danger
                                               : AppColors.accent,
-                                      letterSpacing: 1.5,                                    
+                                      letterSpacing: 1.5,
                                     ),
-                                      overflow: TextOverflow.ellipsis,
-                                      softWrap: true,
-                                      maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: true,
+                                    maxLines: 2,
                                   ),
                                 ),
                               ],
