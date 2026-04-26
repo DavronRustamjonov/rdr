@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter pub *)",
+      "Bash(flutter analyze *)",
+      "Read(//c/Users/ummug/.claude/plugins/cache/caveman/caveman/c2ed24b3e5d4/skills/compress/**)",
+      "Bash(python3 -m scripts \"C:\\\\Users\\\\ummug\\\\StudioProjects\\\\rdr\\\\CLAUDE.md\")",
+      "Bash(python -m scripts \"C:\\\\Users\\\\ummug\\\\StudioProjects\\\\rdr\\\\CLAUDE.md\")"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}
