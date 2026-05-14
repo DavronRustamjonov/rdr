@@ -165,50 +165,61 @@ class _StatusBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 70.h,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontFamily: 'Rajdhani',
-              fontSize: 40.sp,
-              fontWeight: FontWeight.w700,
-              color: color,
-              letterSpacing: 4,
-            ),
-          ),
-          if (isActive && status == MonitoringStatus.sleeping)
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: 70.h),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 4.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             Text(
-              context.l10n.warning,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontFamily: 'Rajdhani',
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w600,
-                color: AppColors.danger,
-                letterSpacing: 1.2,
-              ),
-            ),
-          if (isActive && status == MonitoringStatus.warning)
-            Text(
-              context.l10n.eyesClosedWarn,
+              label,
               textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontFamily: 'Rajdhani',
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w500,
-                color: AppColors.warning,
-                letterSpacing: 0.5,
-                height: 1.2,
+                fontSize: 40.sp,
+                fontWeight: FontWeight.w700,
+                color: color,
+                letterSpacing: 4,
               ),
             ),
-        ],
+            if (isActive && status == MonitoringStatus.sleeping) ...[
+              SizedBox(height: 4.h),
+              Text(
+                context.l10n.warning,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontFamily: 'Rajdhani',
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.danger,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ],
+            if (isActive && status == MonitoringStatus.warning) ...[
+              SizedBox(height: 4.h),
+              Text(
+                context.l10n.eyesClosedWarn,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontFamily: 'Rajdhani',
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.warning,
+                  letterSpacing: 0.5,
+                  height: 1.2,
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }
